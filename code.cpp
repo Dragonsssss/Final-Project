@@ -62,10 +62,10 @@ bool Map::isValidMove(Coordinate move)
 				if (map[newY][newX] != 1 && isBox[newY][newX] == false)  // 不是牆壁也沒箱子就推
 				{
 					isBox[newY][newX] = true;
-					if (map[newY][newX] == 2)
+					if (map[newY][newX] == 2) // 如果將箱子推向目標點 
 						finishCnt++;
 					isBox[newY - move.y][newX - move.x] = false;
-					if (map[newY - move.y][newX - move.x] == 2)
+					if (map[newY - move.y][newX - move.x] == 2) // 如果將箱子推離目標點 
 						finishCnt--;
 					return true;
 				}
@@ -107,7 +107,10 @@ int main()
 		else if (command == 'a')
 			move.x = -1;
 
-		stage[level]->isValidMove(move);  // 看看指令合不合理
+		if(stage[level]->isValidMove(move) == 0)  // 指令如果不合理 
+		{
+			continue; // 回到while迴圈的一開始 
+		}	
 		if (stage[level]->isPass())  // 如果過關就加一個level
 		{
 			// 加個過場畫面？
