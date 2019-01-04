@@ -6,12 +6,11 @@
 #include <windows.h>
 using namespace std;
 
-const int MAX_LEVEL = 2;  // 最多有幾關，可以調
+const int MAX_LEVEL = 5;  // 最多有幾關，可以調
 const int MAX_X = 10; // 地圖水平距離 (ps. 不夠大可以調) 
-const int MAX_Y = 8; // 地圖垂直距離 (ps. 不夠大可以調) 
+const int MAX_Y = 10; // 地圖垂直距離 (ps. 不夠大可以調) 
 const int MAX_BOXES = 20; //地圖最多有幾個箱子 
-int step = 0; //　到哪一個階段 
-int selection = 0; //　首頁用來判斷到哪一個選項 
+
 
 struct Coordinate
 {
@@ -135,48 +134,129 @@ int main()
 	{
 		if(i == 0)
 		{
-			int map1[MAX_Y][MAX_X] = {0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+			int map1[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+									  0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
 			                          0, 0, 1, 2, 1, 0, 0, 0, 0, 0,
 			                          0, 0, 1, 0, 1, 1, 1, 1, 0, 0,
 			                          1, 1, 1, 0, 0, 0, 2, 1, 0, 0,
 			                          1, 2, 0, 0, 0, 1, 1, 1, 0, 0,
 			                          1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
 			                          0, 0, 0, 1, 2, 1, 0, 0, 0, 0,
-			                          0, 0, 0, 1, 1, 1, 0, 0, 0, 0};
+			                          0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
+									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 			Coordinate startP;
-			startP.x = 4, startP.y = 3;            
+			startP.x = 4, startP.y = 4;            
 			int boxNum = 4;
 			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 3, boxes[0].y = 3;
-			boxes[1].x = 3, boxes[1].y = 4;
-			boxes[2].x = 4, boxes[2].y = 5;
-			boxes[3].x = 5, boxes[3].y = 3;
+			boxes[0].x = 3, boxes[0].y = 4;
+			boxes[1].x = 3, boxes[1].y = 5;
+			boxes[2].x = 4, boxes[2].y = 6;
+			boxes[3].x = 5, boxes[3].y = 4;
 			stage[i] = new Map(map1, startP, boxNum, boxes);
 			
 		}
 		else if(i == 1)
 		{
-			int map2[MAX_Y][MAX_X] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+			int map2[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+									  1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
 			                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
 			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
 			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
 			                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
 			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-			                          1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+			                          1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 			Coordinate startP;
-			startP.x = 4, startP.y = 5;
+			startP.x = 4, startP.y = 6;
 			int boxNum = 4;
 			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 3, boxes[0].y = 3;
-			boxes[1].x = 5, boxes[1].y = 3;
-			boxes[2].x = 3, boxes[2].y = 4;
-			boxes[3].x = 5, boxes[3].y = 4;
+			boxes[0].x = 3, boxes[0].y = 4;
+			boxes[1].x = 5, boxes[1].y = 4;
+			boxes[2].x = 3, boxes[2].y = 5;
+			boxes[3].x = 5, boxes[3].y = 5;
 			stage[i] = new Map(map2, startP, boxNum, boxes);				  			
+		}
+		
+		else if(i == 2)
+		{
+			int map3[MAX_Y][MAX_X] = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+									  0, 0, 1, 0, 0, 0, 0, 1, 1, 1,
+									  0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+									  1, 1, 1, 0, 0, 0, 1, 1, 0, 1,
+									  1, 2, 2, 2, 0, 0, 0, 0, 0, 0,
+									  1, 2, 2, 2, 0, 1, 0, 0, 1, 1,
+									  1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+									  0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+									  0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			Coordinate startP;
+			startP.x = 7, startP.y = 7;
+			int boxNum = 6;
+			Coordinate boxes[MAX_BOXES] = {0};
+			boxes[0].x = 4, boxes[0].y = 2;
+			boxes[1].x = 4, boxes[1].y = 3;
+			boxes[2].x = 5, boxes[2].y = 4;
+			boxes[3].x = 4, boxes[3].y = 5;
+			boxes[4].x = 6, boxes[4].y = 5;
+			boxes[5].x = 7, boxes[5].y = 6;
+			stage[i] = new Map(map3, startP, boxNum, boxes);				  			
+		}
+
+		else if(i == 3)
+		{
+			int map4[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+									  0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
+									  0, 0, 1, 2, 0, 2, 2, 1, 0, 0,
+									  0, 0, 1, 2, 0, 0, 2, 1, 0, 0,
+									  0, 1, 1, 1, 0, 0, 0, 1, 1, 0,
+									  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
+									  0, 1, 0, 1, 0, 1, 1, 0, 1, 0,
+									  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
+									  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			Coordinate startP;
+			startP.x = 5, startP.y = 7;
+			int boxNum = 5;
+			Coordinate boxes[MAX_BOXES] = {0};
+			boxes[0].x = 5, boxes[0].y = 3;
+			boxes[1].x = 6, boxes[1].y = 4;
+			boxes[2].x = 3, boxes[2].y = 5;
+			boxes[3].x = 6, boxes[3].y = 5;
+			boxes[4].x = 4, boxes[4].y = 6;
+			stage[i] = new Map(map4, startP, boxNum, boxes);
+		}
+		
+		else if(i == 4)
+		{
+			int map5[MAX_Y][MAX_X] = {0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+									  0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+									  1, 1, 0, 0, 1, 1, 0, 0, 1, 0,
+									  1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+									  1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
+									  1, 1, 1, 2, 1, 1, 0, 1, 1, 1,
+									  0, 1, 2, 2, 2, 0, 0, 0, 0, 1,
+									  0, 1, 1, 2, 2, 0, 0, 0, 0, 1,
+									  0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			Coordinate startP;
+			startP.x = 4, startP.y = 3;
+			int boxNum = 6;
+			Coordinate boxes[MAX_BOXES] = {0};
+			boxes[0].x = 2, boxes[0].y = 2;
+			boxes[1].x = 3, boxes[1].y = 3;
+			boxes[2].x = 5, boxes[2].y = 3;
+			boxes[3].x = 6, boxes[3].y = 4;
+			boxes[4].x = 5, boxes[4].y = 6;
+			boxes[5].x = 7, boxes[5].y = 6;
+			stage[i] = new Map(map5, startP, boxNum, boxes);
 		}
 	}
 	
 	double timer = 0;
+	int step = 0; //　到哪一個階段 
+	int selection = 0; //　首頁用來判斷到哪一個選項 
+	int levelSelection = 0; // 關卡選擇判斷 
 		
 	while (true)
 	{
@@ -186,19 +266,13 @@ int main()
 			cout << "Pushing boxs" << endl << endl; // 標題 
 			
 			if(selection % 2 == 0) // 遊戲開始 
-			{
-				if(timer < 1) // 原本是想做閃爍特效不過還在研究中 
-					cout << "Start! <-" << endl;
-				else
-					cout << endl;
+			{	
+				cout << "Start! <-" << endl;
 				cout << "Choosing Level" << endl;
 			}else if (selection % 2 == 1) // 選擇關卡 
 			{
 				cout << "Start!" << endl;
-				if(timer < 1)
-					cout << "Choosing Level <-" << endl;
-				else
-					cout << endl;
+				cout << "Choosing Level <-" << endl;
 			}
 			
 			switch (_getch())
@@ -210,7 +284,10 @@ int main()
             	selection--;
             	break;
             case 'k': // 確定鍵 
-            	step++;
+            	if(selection == 0)
+            		step++;
+            	if(selection == 1)
+            		step += 2;
             	break;
 	    	default:
 	        	break;            
@@ -218,14 +295,78 @@ int main()
         	
         	if(selection < 0)
         		selection = 0;
-        	
-			timer += 0.01;
-			
-			if(timer >= 2)
-				timer = 0;
+        	if(selection > 1)
+        		selection = 1;
 			
 		} 
-		else if(step == 1 && selection == 0)
+		else if(step == 2)
+		{
+			system("cls");
+			cout << "Choose level" << endl << endl; // 標題
+			if(levelSelection % 5 == 0)  
+			{
+				cout << "Level 1 <-" << endl;
+				cout << "Level 2" << endl;
+				cout << "Level 3" << endl;
+				cout << "Level 4" << endl;
+				cout << "Level 5" << endl;
+			}
+			else if (levelSelection % 5 == 1)  
+			{
+				cout << "Level 1" << endl;
+				cout << "Level 2 <-" << endl;
+				cout << "Level 3" << endl;
+				cout << "Level 4" << endl;
+				cout << "Level 5" << endl;
+			}
+			else if (levelSelection % 5 == 2)  
+			{
+				cout << "Level 1" << endl;
+				cout << "Level 2" << endl;
+				cout << "Level 3 <-" << endl;
+				cout << "Level 4" << endl;
+				cout << "Level 5" << endl;
+			}
+			else if (levelSelection % 5 == 3)  
+			{
+				cout << "Level 1" << endl;
+				cout << "Level 2" << endl;
+				cout << "Level 3" << endl;
+				cout << "Level 4 <-" << endl;
+				cout << "Level 5" << endl;
+			}
+			else if (levelSelection % 5 == 4) 
+			{
+				cout << "Level 1" << endl;
+				cout << "Level 2" << endl;
+				cout << "Level 3" << endl;
+				cout << "Level 4" << endl; 
+				cout << "Level 5 <-" << endl;
+			}
+			
+			switch (_getch())
+        	{
+        	case 's':
+            	levelSelection++;
+            	break;
+        	case 'w':
+            	levelSelection--;
+            	break;
+            case 'k': // 確定鍵 
+            	step--;
+            	level = levelSelection; // 選擇的關卡 
+            	break;
+	    	default:
+	        	break;            
+        	}
+        	
+        	if(levelSelection < 0)
+        		levelSelection = 0;
+        	if(levelSelection > 4)
+        		levelSelection = 4;
+			
+		}
+		else if(step == 1)
 		{
 		
 		 
@@ -265,6 +406,7 @@ int main()
 				level += 1;
 			}
 		}
+		
 	}
 	return 0;
 }
