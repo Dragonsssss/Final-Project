@@ -10,6 +10,8 @@ const int MAX_LEVEL = 2;  // 最多有幾關，可以調
 const int MAX_X = 10; // 地圖水平距離 (ps. 不夠大可以調) 
 const int MAX_Y = 8; // 地圖垂直距離 (ps. 不夠大可以調) 
 const int MAX_BOXES = 20; //地圖最多有幾個箱子 
+int step = 0; //　到哪一個階段 
+int selection = 0; //　首頁用來判斷到哪一個選項 
 
 struct Coordinate
 {
@@ -124,6 +126,7 @@ void Map::draw()
 	} 
 }
 
+
 int main()
 {
 	int level = 0;
@@ -172,43 +175,95 @@ int main()
 			stage[i] = new Map(map2, startP, boxNum, boxes);				  			
 		}
 	}
+	
+	double timer = 0;
 		
 	while (true)
 	{
-		stage[level]->draw();  // 先畫出最新的遊戲狀態
-		
-		if(level == MAX_LEVEL)
+		if(step == 0)
 		{
-			break;
-		}	
+			system("cls");
+			cout << "Pushing boxs" << endl << endl; // 標題 
 			
-		Coordinate move = {0 , 0};
-        switch (_getch())
-        {
-        case 'a':
-            move.x = -1;
-            break;
-        case 'd':
-            move.x = 1;
-            break;
-        case 'w':
-            move.y = -1;
-            break;
-        case 's':
-            move.y = +1;
-            break;
-	    default:
-	        break;            
-        }
+			if(selection % 2 == 0) // 遊戲開始 
+			{
+				if(timer < 1) // 原本是想做閃爍特效不過還在研究中 
+					cout << "Start! <-" << endl;
+				else
+					cout << endl;
+				cout << "Choosing Level" << endl;
+			}else if (selection % 2 == 1) // 選擇關卡 
+			{
+				cout << "Start!" << endl;
+				if(timer < 1)
+					cout << "Choosing Level <-" << endl;
+				else
+					cout << endl;
+			}
+			
+			switch (_getch())
+        	{
+        	case 's':
+            	selection++;
+            	break;
+        	case 'w':
+            	selection--;
+            	break;
+            case 'k': // 確定鍵 
+            	step++;
+            	break;
+	    	default:
+	        	break;            
+        	}
+        	
+        	if(selection < 0)
+        		selection = 0;
+        	
+			timer += 0.01;
+			
+			if(timer >= 2)
+				timer = 0;
+			
+		} 
+		else if(step == 1 && selection == 0)
+		{
+		
+		 
+			stage[level]->draw();  // 先畫出最新的遊戲狀態
+		
+			if(level == MAX_LEVEL)
+			{
+				break;
+			}	
+			
+			Coordinate move = {0 , 0};
+        	switch (_getch())
+        	{
+        	case 'a':
+        	    move.x = -1;
+        	    break;
+       		case 'd':
+         		move.x = 1;
+        	    break;
+        	case 'w':
+            	move.y = -1;
+            	break;
+        	case 's':
+            	move.y = +1;
+            	break;
+	    	default:
+	        	break;            
+        	}
 
-		if(stage[level]->isValidMove(move) == 0)  // 指令如果不合理 
-		{
-			continue; // 回到while迴圈的一開始 
-		}	
-		if (stage[level]->isPass())  // 如果過關就加一個level
-		{
-			// 過場畫面
-			level += 1;
+			if(stage[level]->isValidMove(move) == 0)  // 指令如果不合理 
+			{
+				continue; // 回到while迴圈的一開始 
+			}	
+			if (stage[level]->isPass())  // 如果過關就加一個level
+			{
+				// 過場畫面
+				level += 1;
+			}
 		}
 	}
 	return 0;
