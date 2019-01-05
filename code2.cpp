@@ -270,7 +270,7 @@ int main()
 	{
 		if(step == 0)
 		{
-			gotoxy(0, 0);
+			system("cls");
 			cout << "Pushing boxs" << endl << endl; // 標題 
 			
 			if(selection % 2 == 0) // 遊戲開始 
@@ -309,7 +309,7 @@ int main()
 		} 
 		else if(step == 2)
 		{
-			gotoxy(0, 0);
+			system("cls");
 			cout << "Choose level" << endl << endl; // 標題
 			if(levelSelection % 5 == 0)  
 			{
