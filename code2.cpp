@@ -18,6 +18,14 @@ struct Coordinate
 	int y;
 };
 
+void gotoxy(int xpos, int ypos) // 解決閃爍的問題 
+{
+  COORD scrn;
+  HANDLE hOuput = GetStdHandle(STD_OUTPUT_HANDLE);
+  scrn.X = xpos; scrn.Y = ypos;
+  SetConsoleCursorPosition(hOuput,scrn);
+}
+
 class Map
 {
 private:
@@ -97,29 +105,29 @@ bool Map::isPass()
 }
 void Map::draw()
 {
-	system("cls");
+	gotoxy(0, 0);
 	for (int i = 0; i < MAX_Y; i++) // y軸 
 	{ 
 		for (int j = 0; j < MAX_X; j++) // x軸 
 		{
 			if(person.x == j and person.y == i)
 			{
-				cout << 'o'; 
+				cout << "♀"; 
 				continue;
 			}
 			
 			if(isBox[i][j] == 1)
 			{
-				cout << 'X'; 
+				cout << "◇"; 
 				continue;
 			}
 							
 			if(map[i][j] == 0)
-				cout << ' '; // 空格 
+				cout << "　"; // 空格 
 			else if(map[i][j] == 1)
-				cout << '#'; // 牆壁 
+				cout << "■"; // 牆壁 
 			else
-				cout << 'O'; // 目標點 
+				cout << "○"; // 目標點 
 		}
 		cout << "\n";
 	} 
@@ -262,7 +270,7 @@ int main()
 	{
 		if(step == 0)
 		{
-			system("cls");
+			gotoxy(0, 0);
 			cout << "Pushing boxs" << endl << endl; // 標題 
 			
 			if(selection % 2 == 0) // 遊戲開始 
@@ -301,7 +309,7 @@ int main()
 		} 
 		else if(step == 2)
 		{
-			system("cls");
+			gotoxy(0, 0);
 			cout << "Choose level" << endl << endl; // 標題
 			if(levelSelection % 5 == 0)  
 			{
@@ -369,7 +377,6 @@ int main()
 		else if(step == 1)
 		{
 		
-		 
 			stage[level]->draw();  // 先畫出最新的遊戲狀態
 		
 			if(level == MAX_LEVEL)
