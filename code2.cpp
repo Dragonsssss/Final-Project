@@ -11,7 +11,16 @@ const int MAX_X = 10; // 地圖水平距離 (ps. 不夠大可以調)
 const int MAX_Y = 10; // 地圖垂直距離 (ps. 不夠大可以調) 
 const int MAX_BOXES = 20; //地圖最多有幾個箱子 
 
-
+/*  網上找的，可用可不用 
+    cout << "\n\n\t\t\t■■■■     ■■■  ■      ■   ■        ■  ■■■   ■      ■ \n";  
+    cout << "\t\t\t■      ■  ■    ■  ■    ■    ■■    ■■ ■    ■  ■■    ■ \n";  
+    cout << "\t\t\t■      ■  ■    ■    ■■      ■ ■  ■ ■ ■    ■  ■  ■  ■ \n";  
+    cout << "\t\t\t■■■■    ■    ■     ■       ■  ■■  ■ ■■■■  ■    ■■ \n";  
+    cout << "\t\t\t■      ■  ■    ■    ■■      ■   ■   ■ ■    ■  ■      ■ \n";  
+    cout << "\t\t\t■      ■  ■    ■  ■    ■    ■   ■   ■ ■    ■  ■      ■ \n";  
+    cout << "\t\t\t■■■■     ■■■  ■      ■   ■        ■ ■    ■  ■      ■ \n"; 
+*/
+ 
 struct Coordinate
 {
 	int x;
@@ -136,6 +145,7 @@ void Map::draw()
 
 int main()
 {
+	system( "Title BOXMAN" );
 	int level = 0;
 	Map* stage[MAX_LEVEL]; // 主要放所有關卡的地圖
 	for(int i = 0; i < MAX_LEVEL; i++)
@@ -376,13 +386,7 @@ int main()
 		}
 		else if(step == 1)
 		{
-		
-			stage[level]->draw();  // 先畫出最新的遊戲狀態
-		
-			if(level == MAX_LEVEL)
-			{
-				break;
-			}	
+			stage[level]->draw();  // 先畫出最新的遊戲狀態	
 			
 			Coordinate move = {0 , 0};
         	switch (_getch())
@@ -409,8 +413,14 @@ int main()
 			}	
 			if (stage[level]->isPass())  // 如果過關就加一個level
 			{
-				// 過場畫面
+				stage[level]->draw();
+				// 可在這個位置加過場畫面
 				level += 1;
+				if(level == MAX_LEVEL)
+				{
+					system("pause");
+					break;					
+				}
 			}
 		}
 		
