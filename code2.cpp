@@ -303,6 +303,7 @@ int main()
             	break;
             case 'k': // ½T©wÁä 
             	if(selection == 0)
+            		level = 0;
             		step++;
             	if(selection == 1)
             		step += 2;
@@ -403,6 +404,12 @@ int main()
         	case 's':
             	move.y = +1;
             	break;
+            case 'x':
+            	step--;
+            	break;
+//            case 'r':
+//            	stage[level]->draw();
+//            	break;
 	    	default:
 	        	break;            
         	}
