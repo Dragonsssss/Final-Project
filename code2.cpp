@@ -296,6 +296,7 @@ int main()
 		if(step == 0)
 		{
 			system("cls");
+
 		    cout << "\n\n\t■■■■     ■■■  ■      ■   ■        ■  ■■■   ■      ■ \n";  
 		    cout << "\t■      ■  ■    ■  ■    ■    ■■    ■■ ■    ■  ■■    ■ \n";  
 		    cout << "\t■      ■  ■    ■    ■■      ■ ■  ■ ■ ■    ■  ■  ■  ■ \n";  
@@ -303,6 +304,7 @@ int main()
 		    cout << "\t■      ■  ■    ■    ■■      ■   ■   ■ ■    ■  ■      ■ \n";  
 		    cout << "\t■      ■  ■    ■  ■    ■    ■   ■   ■ ■    ■  ■      ■ \n";  
 		    cout << "\t■■■■     ■■■  ■      ■   ■        ■ ■    ■  ■      ■ \n\n\n\n\n\n\n\n"; 			
+
 			if(selection % 2 == 0) // 遊戲開始 
 			{	
 				cout << "\t\t\t\t\t\t  開始遊戲! <-" << endl << endl;
@@ -433,9 +435,11 @@ int main()
             case 'x':  //重置當前關卡 
             	loadmap(stage, level);
             	break;
+
             case 'c':  //外掛 
             	level++;
             	break;
+
 	    	default:
 	        	break;            
         	}
@@ -453,6 +457,7 @@ int main()
 				{
 					cout << "恭喜您已完成所有關卡!\n";		
 					break;			
+
 				}
 			}
 		}
