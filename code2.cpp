@@ -372,7 +372,7 @@ int main()
             	levelSelection--;
             	break;
             case 'k': // 確定鍵 
-            	step--;
+            	step = 1;
             	level = levelSelection; // 選擇的關卡 
             	break;
 	    	default:
