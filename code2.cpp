@@ -323,11 +323,11 @@ int main()
             	selection--;
             	break;
             case 'k': // 確定鍵 
-            	if(selection == 0)
-            		step++;            		
-            	else if(selection == 1)
-            		step += 2;
-            	system("cls");	
+            	if(selection % 2 == 0)
+            		level = 0;
+            		step = 1;
+            	if(selection % 2 == 1)
+            		step = 2;
             	break;
 	    	default:
 	        	break;            
@@ -393,7 +393,7 @@ int main()
             	levelSelection--;
             	break;
             case 'k': // 確定鍵 
-            	step--;
+            	step = 1;
             	level = levelSelection; // 選擇的關卡 
             	break;
 	    	default:
