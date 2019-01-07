@@ -302,11 +302,11 @@ int main()
             	selection--;
             	break;
             case 'k': // ΩT©w¡‰ 
-            	if(selection == 0)
+            	if(selection % 2 == 0)
             		level = 0;
-            		step++;
-            	if(selection == 1)
-            		step += 2;
+            		step = 1;
+            	if(selection % 2 == 1)
+            		step = 2;
             	break;
 	    	default:
 	        	break;            
