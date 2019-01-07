@@ -4,12 +4,13 @@
 #include <stdlib.h>    
 #include <conio.h>     
 #include <windows.h>
+#define esc 27
 using namespace std;
 
 const int MAX_LEVEL = 5;  // 最多有幾關，可以調
 const int MAX_X = 10; // 地圖水平距離 (ps. 不夠大可以調) 
 const int MAX_Y = 10; // 地圖垂直距離 (ps. 不夠大可以調) 
-const int MAX_BOXES = 20; //地圖最多有幾個箱子 
+const int MAX_BOXES = 20; //地圖最多有幾個箱子
 
 /*  網上找的，可用可不用 
     cout << "\n\n\t\t\t■■■■     ■■■  ■      ■   ■        ■  ■■■   ■      ■ \n";  
@@ -27,7 +28,7 @@ struct Coordinate
 	int y;
 };
 
-void gotoxy(int xpos, int ypos) // 解決閃爍的問題 
+void gotoxy(int xpos, int ypos) // 解決閃爍的問題  
 {
   COORD scrn;
   HANDLE hOuput = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -138,159 +139,179 @@ void Map::draw()
 			else
 				cout << "○"; // 目標點 
 		}
+		if(i == 1)
+		cout << "◎遊戲說明:";
+		else if(i == 2)
+		cout << "按WASD可以移動";
+		else if(i == 3)
+		cout << "按X可以重置關卡";
+		else if(i == 4)
+		cout << "按ESC可以回首頁";		
+		else if(i == 8)
+			cout << "當前進度: " << finishCnt << "/" << targetCnt << "\n";			
 		cout << "\n";
-	} 
+	}
+	
 }
 
+void loadmap(Map* stage[MAX_LEVEL], int i)
+{
+	if(i == 0)
+	{
+		int map1[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+								  0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+		                          0, 0, 1, 2, 1, 0, 0, 0, 0, 0,
+		                          0, 0, 1, 0, 1, 1, 1, 1, 0, 0,
+		                          1, 1, 1, 0, 0, 0, 2, 1, 0, 0,
+		                          1, 2, 0, 0, 0, 1, 1, 1, 0, 0,
+		                          1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
+		                          0, 0, 0, 1, 2, 1, 0, 0, 0, 0,
+		                          0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
+								  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		Coordinate startP;
+		startP.x = 4, startP.y = 4;            
+		int boxNum = 4;
+		Coordinate boxes[MAX_BOXES] = {0};
+		boxes[0].x = 3, boxes[0].y = 4;
+		boxes[1].x = 3, boxes[1].y = 5;
+		boxes[2].x = 4, boxes[2].y = 6;
+		boxes[3].x = 5, boxes[3].y = 4;
+		stage[i] = new Map(map1, startP, boxNum, boxes);
+		
+	}
+	else if(i == 1)
+	{
+		int map2[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+								  1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+		                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+		                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
+		                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+		                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+		                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
+		                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+		                          1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+								  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		Coordinate startP;
+		startP.x = 4, startP.y = 6;
+		int boxNum = 4;
+		Coordinate boxes[MAX_BOXES] = {0};
+		boxes[0].x = 3, boxes[0].y = 4;
+		boxes[1].x = 5, boxes[1].y = 4;
+		boxes[2].x = 3, boxes[2].y = 5;
+		boxes[3].x = 5, boxes[3].y = 5;
+		stage[i] = new Map(map2, startP, boxNum, boxes);				  			
+	}
+	
+	else if(i == 2)
+	{
+		int map3[MAX_Y][MAX_X] = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+								  0, 0, 1, 0, 0, 0, 0, 1, 1, 1,
+								  0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+								  1, 1, 1, 0, 0, 0, 1, 1, 0, 1,
+								  1, 2, 2, 2, 0, 0, 0, 0, 0, 0,
+								  1, 2, 2, 2, 0, 1, 0, 0, 1, 1,
+								  1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+								  0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+								  0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+								  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		Coordinate startP;
+		startP.x = 7, startP.y = 7;
+		int boxNum = 6;
+		Coordinate boxes[MAX_BOXES] = {0};
+		boxes[0].x = 4, boxes[0].y = 2;
+		boxes[1].x = 4, boxes[1].y = 3;
+		boxes[2].x = 5, boxes[2].y = 4;
+		boxes[3].x = 4, boxes[3].y = 5;
+		boxes[4].x = 6, boxes[4].y = 5;
+		boxes[5].x = 7, boxes[5].y = 6;
+		stage[i] = new Map(map3, startP, boxNum, boxes);				  			
+	}
+
+	else if(i == 3)
+	{
+		int map4[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+								  0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
+								  0, 0, 1, 2, 0, 2, 2, 1, 0, 0,
+								  0, 0, 1, 2, 0, 0, 2, 1, 0, 0,
+								  0, 1, 1, 1, 0, 0, 0, 1, 1, 0,
+								  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
+								  0, 1, 0, 1, 0, 1, 1, 0, 1, 0,
+								  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
+								  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+								  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		Coordinate startP;
+		startP.x = 5, startP.y = 7;
+		int boxNum = 5;
+		Coordinate boxes[MAX_BOXES] = {0};
+		boxes[0].x = 5, boxes[0].y = 3;
+		boxes[1].x = 6, boxes[1].y = 4;
+		boxes[2].x = 3, boxes[2].y = 5;
+		boxes[3].x = 6, boxes[3].y = 5;
+		boxes[4].x = 4, boxes[4].y = 6;
+		stage[i] = new Map(map4, startP, boxNum, boxes);
+	}
+	
+	else if(i == 4)
+	{
+		int map5[MAX_Y][MAX_X] = {0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+								  0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+								  1, 1, 0, 0, 1, 1, 0, 0, 1, 0,
+								  1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+								  1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
+								  1, 1, 1, 2, 1, 1, 0, 1, 1, 1,
+								  0, 1, 2, 2, 2, 0, 0, 0, 0, 1,
+								  0, 1, 1, 2, 2, 0, 0, 0, 0, 1,
+								  0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+								  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		Coordinate startP;
+		startP.x = 4, startP.y = 3;
+		int boxNum = 6;
+		Coordinate boxes[MAX_BOXES] = {0};
+		boxes[0].x = 2, boxes[0].y = 2;
+		boxes[1].x = 3, boxes[1].y = 3;
+		boxes[2].x = 5, boxes[2].y = 3;
+		boxes[3].x = 6, boxes[3].y = 4;
+		boxes[4].x = 5, boxes[4].y = 6;
+		boxes[5].x = 7, boxes[5].y = 6;
+		stage[i] = new Map(map5, startP, boxNum, boxes);
+	}	
+}
 
 int main()
 {
 	system( "Title BOXMAN" );
-	int level = 0;
 	Map* stage[MAX_LEVEL]; // 主要放所有關卡的地圖
 	for(int i = 0; i < MAX_LEVEL; i++)
 	{
-		if(i == 0)
-		{
-			int map1[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-									  0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
-			                          0, 0, 1, 2, 1, 0, 0, 0, 0, 0,
-			                          0, 0, 1, 0, 1, 1, 1, 1, 0, 0,
-			                          1, 1, 1, 0, 0, 0, 2, 1, 0, 0,
-			                          1, 2, 0, 0, 0, 1, 1, 1, 0, 0,
-			                          1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
-			                          0, 0, 0, 1, 2, 1, 0, 0, 0, 0,
-			                          0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
-									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			Coordinate startP;
-			startP.x = 4, startP.y = 4;            
-			int boxNum = 4;
-			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 3, boxes[0].y = 4;
-			boxes[1].x = 3, boxes[1].y = 5;
-			boxes[2].x = 4, boxes[2].y = 6;
-			boxes[3].x = 5, boxes[3].y = 4;
-			stage[i] = new Map(map1, startP, boxNum, boxes);
-			
-		}
-		else if(i == 1)
-		{
-			int map2[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-									  1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-			                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
-			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-			                          1, 0, 2, 0, 0, 0, 2, 0, 1, 0,
-			                          1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-			                          1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			Coordinate startP;
-			startP.x = 4, startP.y = 6;
-			int boxNum = 4;
-			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 3, boxes[0].y = 4;
-			boxes[1].x = 5, boxes[1].y = 4;
-			boxes[2].x = 3, boxes[2].y = 5;
-			boxes[3].x = 5, boxes[3].y = 5;
-			stage[i] = new Map(map2, startP, boxNum, boxes);				  			
-		}
-		
-		else if(i == 2)
-		{
-			int map3[MAX_Y][MAX_X] = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-									  0, 0, 1, 0, 0, 0, 0, 1, 1, 1,
-									  0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
-									  1, 1, 1, 0, 0, 0, 1, 1, 0, 1,
-									  1, 2, 2, 2, 0, 0, 0, 0, 0, 0,
-									  1, 2, 2, 2, 0, 1, 0, 0, 1, 1,
-									  1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
-									  0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-									  0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
-									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			Coordinate startP;
-			startP.x = 7, startP.y = 7;
-			int boxNum = 6;
-			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 4, boxes[0].y = 2;
-			boxes[1].x = 4, boxes[1].y = 3;
-			boxes[2].x = 5, boxes[2].y = 4;
-			boxes[3].x = 4, boxes[3].y = 5;
-			boxes[4].x = 6, boxes[4].y = 5;
-			boxes[5].x = 7, boxes[5].y = 6;
-			stage[i] = new Map(map3, startP, boxNum, boxes);				  			
-		}
-
-		else if(i == 3)
-		{
-			int map4[MAX_Y][MAX_X] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-									  0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
-									  0, 0, 1, 2, 0, 2, 2, 1, 0, 0,
-									  0, 0, 1, 2, 0, 0, 2, 1, 0, 0,
-									  0, 1, 1, 1, 0, 0, 0, 1, 1, 0,
-									  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
-									  0, 1, 0, 1, 0, 1, 1, 0, 1, 0,
-									  0, 1, 0, 0, 0, 0, 0, 0, 1, 0,
-									  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			Coordinate startP;
-			startP.x = 5, startP.y = 7;
-			int boxNum = 5;
-			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 5, boxes[0].y = 3;
-			boxes[1].x = 6, boxes[1].y = 4;
-			boxes[2].x = 3, boxes[2].y = 5;
-			boxes[3].x = 6, boxes[3].y = 5;
-			boxes[4].x = 4, boxes[4].y = 6;
-			stage[i] = new Map(map4, startP, boxNum, boxes);
-		}
-		
-		else if(i == 4)
-		{
-			int map5[MAX_Y][MAX_X] = {0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-									  0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
-									  1, 1, 0, 0, 1, 1, 0, 0, 1, 0,
-									  1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-									  1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
-									  1, 1, 1, 2, 1, 1, 0, 1, 1, 1,
-									  0, 1, 2, 2, 2, 0, 0, 0, 0, 1,
-									  0, 1, 1, 2, 2, 0, 0, 0, 0, 1,
-									  0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-									  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			Coordinate startP;
-			startP.x = 4, startP.y = 3;
-			int boxNum = 6;
-			Coordinate boxes[MAX_BOXES] = {0};
-			boxes[0].x = 2, boxes[0].y = 2;
-			boxes[1].x = 3, boxes[1].y = 3;
-			boxes[2].x = 5, boxes[2].y = 3;
-			boxes[3].x = 6, boxes[3].y = 4;
-			boxes[4].x = 5, boxes[4].y = 6;
-			boxes[5].x = 7, boxes[5].y = 6;
-			stage[i] = new Map(map5, startP, boxNum, boxes);
-		}
+		loadmap(stage, i);
 	}
-	
+
 	double timer = 0;
+	int level = 0; // 到第幾關 
 	int step = 0; //　到哪一個階段 
 	int selection = 0; //　首頁用來判斷到哪一個選項 
 	int levelSelection = 0; // 關卡選擇判斷 
-		
 	while (true)
 	{
 		if(step == 0)
 		{
 			system("cls");
-			cout << "Pushing boxs" << endl << endl; // 標題 
-			
+		    cout << "\n\n\t■■■■     ■■■  ■      ■   ■        ■  ■■■   ■      ■ \n";  
+		    cout << "\t■      ■  ■    ■  ■    ■    ■■    ■■ ■    ■  ■■    ■ \n";  
+		    cout << "\t■      ■  ■    ■    ■■      ■ ■  ■ ■ ■    ■  ■  ■  ■ \n";  
+		    cout << "\t■■■■    ■    ■     ■       ■  ■■  ■ ■■■■  ■    ■■ \n";  
+		    cout << "\t■      ■  ■    ■    ■■      ■   ■   ■ ■    ■  ■      ■ \n";  
+		    cout << "\t■      ■  ■    ■  ■    ■    ■   ■   ■ ■    ■  ■      ■ \n";  
+		    cout << "\t■■■■     ■■■  ■      ■   ■        ■ ■    ■  ■      ■ \n\n\n\n\n\n\n\n"; 			
 			if(selection % 2 == 0) // 遊戲開始 
 			{	
-				cout << "Start! <-" << endl;
-				cout << "Choosing Level" << endl;
-			}else if (selection % 2 == 1) // 選擇關卡 
+				cout << "\t\t\t\t\t\t  開始遊戲! <-" << endl << endl;
+				cout << "\t\t\t\t\t\t  選個關卡~" << endl;
+			}
+			else if (selection % 2 == 1) // 選擇關卡 
 			{
-				cout << "Start!" << endl;
-				cout << "Choosing Level <-" << endl;
+				cout << "\t\t\t\t\t\t  開始遊戲!" << endl << endl;
+				cout << "\t\t\t\t\t\t  選個關卡~ <-" << endl;
 			}
 			
 			switch (_getch())
@@ -302,16 +323,16 @@ int main()
             	selection--;
             	break;
             case 'k': // 確定鍵 
-            	if(selection % 2 == 0)
-            		level = 0;
-            		step = 1;
-            	if(selection % 2 == 1)
-            		step = 2;
+            	if(selection == 0)
+            		step++;            		
+            	else if(selection == 1)
+            		step += 2;
+            	system("cls");	
             	break;
 	    	default:
 	        	break;            
         	}
-        	
+        	system("cls");
         	if(selection < 0)
         		selection = 0;
         	if(selection > 1)
@@ -372,7 +393,7 @@ int main()
             	levelSelection--;
             	break;
             case 'k': // 確定鍵 
-            	step = 1;
+            	step--;
             	level = levelSelection; // 選擇的關卡 
             	break;
 	    	default:
@@ -404,12 +425,17 @@ int main()
         	case 's':
             	move.y = +1;
             	break;
-            case 'x':
+            case esc:  //返回首頁 
+            	level = 0;
+            	for(int i = 0; i < MAX_LEVEL; i++){loadmap(stage, i);}
             	step--;
             	break;
-//            case 'r':
-//            	stage[level]->draw();
-//            	break;
+            case 'x':  //重置當前關卡 
+            	loadmap(stage, level);
+            	break;
+            case 'c':  //外掛 
+            	level++;
+            	break;
 	    	default:
 	        	break;            
         	}
@@ -425,8 +451,8 @@ int main()
 				level += 1;
 				if(level == MAX_LEVEL)
 				{
-					system("pause");
-					break;					
+					cout << "恭喜您已完成所有關卡!\n";		
+					break;			
 				}
 			}
 		}
