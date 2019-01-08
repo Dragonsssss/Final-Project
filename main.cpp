@@ -2,7 +2,7 @@
 #include <time.h>
 using namespace sf;
 
-const int MAX_LEVEL   = 2;   // 最多有幾關，可以調
+const int MAX_LEVEL   = 5;   // 最多有幾關，可以調
 const int MAX_X       = 10;  // 地圖水平距離 (ps. 不夠大可以調) 
 const int MAX_Y       = 10;  // 地圖垂直距離 (ps. 不夠大可以調) 
 const int MAX_BOXES   = 20;  // 地圖最多有幾個箱子
@@ -315,15 +315,27 @@ int main()
             if (e.type == Event::Closed)      
                 window.close();
     
-
-            if (Keyboard::isKeyPressed(Keyboard::Left)) 
-                move.x = -1;   
-	        if (Keyboard::isKeyPressed(Keyboard::Right))  
-                move.x = 1;  
+			if (Keyboard::isKeyPressed(Keyboard::Left))
+			{
+				move.x = -1;
+				move.y = 0;
+			} 
+                 
+	        if (Keyboard::isKeyPressed(Keyboard::Right))
+			{
+				move.x = 1;
+				move.y = 0;
+			}
 	        if (Keyboard::isKeyPressed(Keyboard::Up)) 
-                move.y = -1;
-		    if (Keyboard::isKeyPressed(Keyboard::Down)) 
-                move.y = 1;
+			{
+				move.x = 0;
+				move.y = -1;
+			}
+		    if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				move.x = 0;
+				move.y = 1;
+			}
             if (Keyboard::isKeyPressed(Keyboard::X))
                 loadmap(stage, level);
             if (Keyboard::isKeyPressed(Keyboard::Escape))
@@ -331,11 +343,26 @@ int main()
                 levelSelect = 0;
                 start = false;
             }
-                
+			if (Keyboard::isKeyPressed(Keyboard::C))
+			{
+				level++;
+			}		
 		}
-
         
-
+		if (level >= MAX_LEVEL)
+        {
+            while (window.isOpen())
+            {
+                window.draw(congrats);
+                Event e;
+                while (window.pollEvent(e))
+                {
+                    if (e.type == Event::Closed)      
+                        window.close();
+		        }
+                window.display();
+            }
+        }  
         if (stage[level]->isValidMove(move) == 0)  // 指令如果不合理
         {
             ;
@@ -386,21 +413,7 @@ int main()
         if (stage[level]->isPass())
         {
             level += 1;
-        }
-		if (level >= MAX_LEVEL)
-        {
-            while (window.isOpen())
-            {
-                window.draw(congrats);
-                Event e;
-                while (window.pollEvent(e))
-                {
-                    if (e.type == Event::Closed)      
-                        window.close();
-		        }
-                window.display();
-            }
-        }    
+        }  
     }
 
     return 0;
