@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
+#include <iostream>
 using namespace sf;
 
 const int MAX_LEVEL   = 5;   // 最多有幾關，可以調
@@ -310,6 +311,7 @@ int main()
 
         Event e;
         Coordinate move = {0 , 0};
+		Time sleepTime = milliseconds(200);
         while (window.pollEvent(e))
         {
             if (e.type == Event::Closed)      
@@ -346,6 +348,8 @@ int main()
 			if (Keyboard::isKeyPressed(Keyboard::C))
 			{
 				level++;
+				std::cout << "Skipping challenges is not fun." << std::endl;
+				sleep(sleepTime);
 			}		
 		}
         
