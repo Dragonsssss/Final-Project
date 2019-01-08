@@ -307,13 +307,13 @@ int main()
 
 			if(selection % 2 == 0) // 遊戲開始 
 			{	
-				cout << "\t\t\t\t\t\t  開始遊戲! <-" << endl << endl;
-				cout << "\t\t\t\t\t\t  選個關卡~" << endl;
+				cout << "\t\t\t\t  開始遊戲! <-" << endl << endl;
+				cout << "\t\t\t\t  選個關卡~" << endl;
 			}
 			else if (selection % 2 == 1) // 選擇關卡 
 			{
-				cout << "\t\t\t\t\t\t  開始遊戲!" << endl << endl;
-				cout << "\t\t\t\t\t\t  選個關卡~ <-" << endl;
+				cout << "\t\t\t\t  開始遊戲!" << endl << endl;
+				cout << "\t\t\t\t  選個關卡~ <-" << endl;
 			}
 			
 			switch (_getch())
