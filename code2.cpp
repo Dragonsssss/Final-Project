@@ -1,7 +1,7 @@
 #pragma warning(disable:4996)
 #include <iostream>
-#include <stdio.h>     
-#include <stdlib.h>    
+//#include <stdio.h>     
+//#include <stdlib.h>    
 #include <conio.h>     
 #include <windows.h>
 #define esc 27
@@ -443,6 +443,13 @@ int main()
 	    	default:
 	        	break;            
         	}
+        	
+        	if(level == MAX_LEVEL)
+				{
+					cout << "恭喜您已完成所有關卡!\n";		
+					break;			
+
+				}
 
 			if(stage[level]->isValidMove(move) == 0)  // 指令如果不合理 
 			{
@@ -453,12 +460,7 @@ int main()
 				stage[level]->draw();
 				// 可在這個位置加過場畫面
 				level += 1;
-				if(level == MAX_LEVEL)
-				{
-					cout << "恭喜您已完成所有關卡!\n";		
-					break;			
-
-				}
+				
 			}
 		}
 		
